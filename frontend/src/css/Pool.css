@@ -1,0 +1,88 @@
+.PoolBox {
+    margin-top: 80px;
+}
+
+.PoolBox-header {
+    padding: 8px 12px;
+    margin-bottom: 8px;
+    width: 100%;
+    color: rgb(119, 128, 160);
+}
+
+.PoolBox-font-pair-amounts  {
+    box-sizing: border-box;
+    margin: 0px 0 12px 0;
+    min-width: 0px;
+    /* font-weight: 600; */
+    font-size: 14px;
+}
+
+.PoolBox-SelectPairField  {
+    border-radius: 16px;
+    border: 1px solid rgb(255, 255, 255);
+    width: 100%;
+    padding: 0px;
+    border-radius: 8px;
+    margin-bottom: 8px;
+}
+
+.PoolBox-dialogButton {
+    background-color: rgb(232, 236, 251);
+    box-shadow: rgb(0 0 0 / 8%) 0px 6px 10px;
+    color: rgb(13, 17, 28);
+    border-radius: 16px;
+    border: none;
+    font-size: 16px;
+    font-weight: 500;
+    height: 2.8rem;
+    width: 100%;
+    padding: 0px 8px;
+    text-align: left;
+}
+
+.PoolBox-SelectToken  {
+    font-size: 16px;
+    font-weight: bold; 
+    margin-right:4px;
+    /* background-color: rgb(251, 17, 142);
+    opacity: 0.4;
+    color: rgb(255, 255, 255); */
+    border-radius: 16px;
+    padding: 6px 6px 6px 8px;
+}
+
+.PoolBox-AmountFiled {
+    border-radius: 20px;
+    /* background-color: rgb(232, 236, 251); */
+    background-color: rgb(245, 246, 252);
+    padding: 1rem 1rem 0 0.75rem;
+    margin-bottom: 14px;
+}
+
+.PoolBox-AmountFiled-input {
+    opacity: 1;
+    text-align: left;
+}
+
+.PoolBox-AmountFiled-button {
+    background-color: rgb(232, 236, 251);
+    opacity: 1;
+    box-shadow: rgb(0 0 0 / 8%) 0px 6px 10px;
+    color: rgb(13, 17, 28); 
+    border-radius: 16px;
+    font-size: 24px;
+    font-weight: 500;
+    height: 2.4rem;
+    padding: 0px 8px 0px 4px;
+}
+
+.PoolBox-AmountFiled-balance {
+    justify-content: flex-end;
+    padding: 0.5rem 1rem 0.5rem 0;
+    box-sizing: border-box;
+    margin-top: 4px;
+    font-weight: 400;
+    font-size: 14px;
+}
+
+

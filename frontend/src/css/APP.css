@@ -1,0 +1,15 @@
+.menu-link {
+text-decoration: none;
+align-items: left;
+border-radius: 3rem;
+font-size: 1rem;
+width: fit-content;
+margin: 0 12px;
+font-weight: 500;
+color: gray;
+}
+.menu-link.active {
+border-radius: 12px;
+font-weight: 600;
+color: white;
+}
