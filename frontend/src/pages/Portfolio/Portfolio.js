@@ -34,6 +34,13 @@ export default function Portfolio({tokens, isConnected, signerAddr, signer, getS
     }
     init();
   }, [tokens, isConnected]);
+
+  const formatNum = (num) => {
+    const str = parseFloat(num).toFixed(3).toString();
+    const reg = str.indexOf(".") > -1 ? /(\d)(?=(\d{3})+\.)/g : /(\d)(?=(?:\d{3})+$)/g;
+    return str.replace(reg,"$1,");
+  }
+
   const renderWalletBalance = () => {
     return(
       <div className="card PortfolioBox">
@@ -41,10 +48,12 @@ export default function Portfolio({tokens, isConnected, signerAddr, signer, getS
           <h6 className="card-title PortfolioBox-header">
             <span style={{color:"black"}}>Wallet Balances</span>
           </h6>
-
+          
+          <div style={{padding:"0 50px"}}>
           <WalletBalanceBarChart walletBalance={walletBalance} />
+          </div>
 
-          <table class="table">
+          <table className="table">
             <thead>
               <tr>
                 <th scope="col" style={{fontWeight:"500"}}>Asset</th>
@@ -62,8 +71,8 @@ export default function Portfolio({tokens, isConnected, signerAddr, signer, getS
                         <span style={{fontSize: "16px", marginLeft:"4px"}}>{token.name}</span>
                       </span>
                     </td>
-                    <td>{token.amount}</td>
-                    <td>{token.value}</td>
+                    <td>{formatNum(token.amount)}</td>
+                    <td>{formatNum(token.value)}</td>
                   </tr>
                 );
             })}
@@ -88,7 +97,7 @@ export default function Portfolio({tokens, isConnected, signerAddr, signer, getS
           <LiquidityDrawPieChart liquidityBalance={liquidityBalance}/>
 
 
-          <table class="table">
+          <table className="table">
             <thead>
               <tr>
                 <th scope="col" style={{fontWeight:"500"}}>liquidity</th>
@@ -112,7 +121,7 @@ export default function Portfolio({tokens, isConnected, signerAddr, signer, getS
                           <span style={{fontSize: "16px", marginLeft:"4px"}}>{token.token0}</span>
                       </span>
                     </td>
-                    <td>{token.balance}</td>
+                    <td>{formatNum(token.balance)}</td>
                   </tr>
                 );
             })}

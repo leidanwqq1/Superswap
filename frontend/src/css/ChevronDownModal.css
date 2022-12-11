@@ -41,3 +41,16 @@
     padding: 0 4px 0 0;
 }
 
+.ChevronDownModal-UNK {
+    /* --size: 36px; */
+    border-radius: 100px;
+    color: rgb(13, 17, 28);
+    background-color: rgb(232, 236, 251);
+    /* font-size: calc(var(--size) / 3); */
+    font-weight: 500;
+    height: 36px;
+    line-height: 36px;
+    /* text-align: center; */
+    width: 36px;
+}
+

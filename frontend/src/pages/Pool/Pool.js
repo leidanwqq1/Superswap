@@ -102,6 +102,11 @@ export default function Pool({tokens, isConnected, signerAddr, signer, getSigner
     updateAmountValue(); 
   }, [activeItemIn0.name, activeItemIn1.name, amountIn0, amountIn1]);
 
+  const formatNum = (num) => {
+    const str = num.toString();
+    const reg = str.indexOf(".") > -1 ? /(\d)(?=(\d{3})+\.)/g : /(\d)(?=(?:\d{3})+$)/g;
+    return str.replace(reg,"$1,");
+  }
 
   const addLiquidity = async (e) => {
     e.preventDefault();
@@ -141,7 +146,7 @@ export default function Pool({tokens, isConnected, signerAddr, signer, getSigner
               </span>
             </div>
           </div>
-          <div className="row PoolBox-AmountFiled-balance">Balance: {activeItemIn0.balance}</div>
+          <div className="row PoolBox-AmountFiled-balance">Balance: {formatNum(activeItemIn0.balance)}</div>
         </div>
 
         <div className="PoolBox-AmountFiled">
@@ -169,7 +174,7 @@ export default function Pool({tokens, isConnected, signerAddr, signer, getSigner
                 )}
               </span>
             </div>
-            <div className="row PoolBox-AmountFiled-balance">Balance: {activeItemIn1.balance}</div>
+            <div className="row PoolBox-AmountFiled-balance">Balance: {formatNum(activeItemIn1.balance)}</div>
           </div>
         </div>
 
@@ -235,7 +240,7 @@ export default function Pool({tokens, isConnected, signerAddr, signer, getSigner
               </span>
             </div>
           </div>
-          <div className="row PoolBox-AmountFiled-balance">Balance: {liquidityBalance}</div>
+          <div className="row PoolBox-AmountFiled-balance">Balance: {formatNum(liquidityBalance)}</div>
         </div>
 
         <div className="d-grid gap-2">
@@ -263,9 +268,9 @@ export default function Pool({tokens, isConnected, signerAddr, signer, getSigner
   }
   const renderPool = () => {
     return (
-      <div class="card PoolBox">
+      <div className="card PoolBox">
 
-        <div class="card-header">
+        <div className="card-header">
           <div className="row">
             <div className="col-md-10">
               <ul className="nav nav-tabs card-header-tabs">
@@ -292,7 +297,7 @@ export default function Pool({tokens, isConnected, signerAddr, signer, getSigner
           </div>
         </div>
 
-        <div class="card-body">
+        <div className="card-body">
           <h6 className="PoolBox-font-pair-amounts">Select Pair</h6>
           <div className="row" style={{marginBottom:"12px"}}>
               <div className="col-md-6 PoolBox-SelectPairField">
@@ -316,7 +321,8 @@ export default function Pool({tokens, isConnected, signerAddr, signer, getSigner
                       tokens={tokens}
                       selectToken={selectToken} 
                       activeItem={activeItemIn0} 
-                      direction="In" />
+                      direction="In"
+                      provider={provider} />
                 </div>
               </div>
 
@@ -341,7 +347,8 @@ export default function Pool({tokens, isConnected, signerAddr, signer, getSigner
                       tokens={tokens} 
                       selectToken={selectToken} 
                       activeItem={activeItemIn1} 
-                      direction="Out" />
+                      direction="Out"
+                      provider={provider} />
                 </div>
               </div>
           </div>
