@@ -85,99 +85,98 @@ async function main() {
   console.log("The abi of superswapRouter is stored.");
 
   console.log("\n6.facet.");
-  const amount = ethers.utils.parseUnits("10000", 18).toString();
+  const amount = ethers.utils.parseUnits("1000", 18).toString();
   await Promise.all(
     [dai, link, inch, uni, usdt, usdc, wbtc].map(contract => contract.faucet(deployer.address, amount))
   );
   console.log("facet success!");
 
   console.log("\n7.get WETH.");
-  await weth.deposit({value: ethers.utils.parseEther("10").toString()});
+  await weth.deposit({value: ethers.utils.parseEther("1").toString()});
   const balanceWETH = await weth.balanceOf(deployer.address);
   console.log(balanceWETH);
   console.log(`WETH balance ${ethers.utils.formatEther(balanceWETH).toString()} !`);
 
   console.log("\n8.create pairs.");
-  const time = Date.now() + 60000;
-  const deadline = (ethers.BigNumber.from(time)).toString();
+  const deadline = ethers.BigNumber.from(Date.now()).div(1000).add(60).toString();
   await Promise.all([
-    weth.approve(superswapRouter.address, ethers.utils.parseEther("7").toString()),
-    dai.approve(superswapRouter.address, ethers.utils.parseEther("1167").toString()),
-    link.approve(superswapRouter.address, ethers.utils.parseEther("172").toString()),
-    inch.approve(superswapRouter.address, ethers.utils.parseEther("2271").toString()),
-    uni.approve(superswapRouter.address, ethers.utils.parseEther("222").toString()),
-    usdt.approve(superswapRouter.address, ethers.utils.parseEther("1168").toString()),
-    usdc.approve(superswapRouter.address, ethers.utils.parseEther("1168").toString()),
-    wbtc.approve(superswapRouter.address, ethers.utils.parseEther("0.07").toString())
+    weth.approve(superswapRouter.address, ethers.utils.parseEther("0.7").toString()),
+    dai.approve(superswapRouter.address, ethers.utils.parseEther("116.7").toString()),
+    link.approve(superswapRouter.address, ethers.utils.parseEther("17.2").toString()),
+    inch.approve(superswapRouter.address, ethers.utils.parseEther("227.1").toString()),
+    uni.approve(superswapRouter.address, ethers.utils.parseEther("22.2").toString()),
+    usdt.approve(superswapRouter.address, ethers.utils.parseEther("116.8").toString()),
+    usdc.approve(superswapRouter.address, ethers.utils.parseEther("116.8").toString()),
+    wbtc.approve(superswapRouter.address, ethers.utils.parseEther("0.007").toString())
   ]);
   console.log("approve success!");
   await superswapRouter.addLiquidity(
     weth.address, 
     dai.address,
-    ethers.utils.parseEther("1").toString(),
-    ethers.utils.parseEther("1167").toString(),
-    ethers.utils.parseEther("1").toString(),
-    ethers.utils.parseEther("1167").toString(),
+    ethers.utils.parseEther("0.1").toString(),
+    ethers.utils.parseEther("116.7").toString(),
+    ethers.utils.parseEther("0.1").toString(),
+    ethers.utils.parseEther("116.7").toString(),
     deployer.address,
     deadline
   );
   await superswapRouter.addLiquidity(
     weth.address, 
     link.address,
-    ethers.utils.parseEther("1").toString(),
-    ethers.utils.parseEther("172").toString(),
-    ethers.utils.parseEther("1").toString(),
-    ethers.utils.parseEther("172").toString(),
+    ethers.utils.parseEther("0.1").toString(),
+    ethers.utils.parseEther("17.2").toString(),
+    ethers.utils.parseEther("0.1").toString(),
+    ethers.utils.parseEther("17.2").toString(),
     deployer.address,
     deadline
   );
   await superswapRouter.addLiquidity(
     weth.address, 
     inch.address,
-    ethers.utils.parseEther("1").toString(),
-    ethers.utils.parseEther("2271").toString(),
-    ethers.utils.parseEther("1").toString(),
-    ethers.utils.parseEther("2271").toString(),
+    ethers.utils.parseEther("0.1").toString(),
+    ethers.utils.parseEther("227.1").toString(),
+    ethers.utils.parseEther("0.1").toString(),
+    ethers.utils.parseEther("227.1").toString(),
     deployer.address,
     deadline
   );
   await superswapRouter.addLiquidity(
     weth.address, 
     uni.address,
-    ethers.utils.parseEther("1").toString(),
-    ethers.utils.parseEther("222").toString(),
-    ethers.utils.parseEther("1").toString(),
-    ethers.utils.parseEther("222").toString(),
+    ethers.utils.parseEther("0.1").toString(),
+    ethers.utils.parseEther("22.2").toString(),
+    ethers.utils.parseEther("0.1").toString(),
+    ethers.utils.parseEther("22.2").toString(),
     deployer.address,
     deadline
   );
   await superswapRouter.addLiquidity(
     weth.address, 
     usdt.address,
-    ethers.utils.parseEther("1").toString(),
-    ethers.utils.parseEther("1168").toString(),
-    ethers.utils.parseEther("1").toString(),
-    ethers.utils.parseEther("1168").toString(),
+    ethers.utils.parseEther("0.1").toString(),
+    ethers.utils.parseEther("116.8").toString(),
+    ethers.utils.parseEther("0.1").toString(),
+    ethers.utils.parseEther("116.8").toString(),
     deployer.address,
     deadline
   );
   await superswapRouter.addLiquidity(
     weth.address, 
     usdc.address,
-    ethers.utils.parseEther("1").toString(),
-    ethers.utils.parseEther("1168").toString(),
-    ethers.utils.parseEther("1").toString(),
-    ethers.utils.parseEther("1168").toString(),
+    ethers.utils.parseEther("0.1").toString(),
+    ethers.utils.parseEther("116.8").toString(),
+    ethers.utils.parseEther("0.1").toString(),
+    ethers.utils.parseEther("116.8").toString(),
     deployer.address,
     deadline
   );
   await superswapRouter.addLiquidity(
     weth.address, 
     wbtc.address,
-    ethers.utils.parseEther("1").toString(),
-    ethers.utils.parseEther("0.07").toString(),
-    ethers.utils.parseEther("1").toString(),
-    ethers.utils.parseEther("0.07").toString(),
+    ethers.utils.parseEther("0.1").toString(),
+    ethers.utils.parseEther("0.007").toString(),
+    ethers.utils.parseEther("0.1").toString(),
+    ethers.utils.parseEther("0.007").toString(),
     deployer.address,
     deadline
   );

@@ -4,12 +4,11 @@ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "./interface/ISuperswapPair.sol";
 import "./interface/ISuperswapFactory.sol";
 import "./interface/IWETH.sol";
-
-import "hardhat/console.sol";
+// import "hardhat/console.sol";
 
 contract SuperswapRouter {
-    address factory;
-    address weth;
+    address public factory;
+    address public weth;
     constructor(address _factory, address _weth){
         factory = _factory;
         weth = _weth;
@@ -55,13 +54,12 @@ contract SuperswapRouter {
         uint amount0Min,
         uint amount1Min
     ) private returns(uint amount0, uint amount1) {
+        require(amountIn0 >= amount0Min && amountIn1 >= amount1Min, "Input amount shouldn't be less than minimum amount.");
         if(ISuperswapFactory(factory).getPair(token0, token1) == address(0)){
-            console.log("==== createPair ======");
             ISuperswapFactory(factory).createPair(token0, token1);
         }
         (uint reserve0, uint reserve1) = getResevers(token0, token1);
         if(reserve0 == 0 && reserve1 == 0) {
-            console.log("==== reserve0 == 0 && reserve1 == 0 ======");
             (amount0, amount1) = (amountIn0, amountIn1);
         }else{
             uint amount1Optimal = quote(amountIn0, reserve0, reserve1);
@@ -90,14 +88,11 @@ contract SuperswapRouter {
         // 1.calculate amounts of two tokens.
         (uint amount0, uint amount1) = _addLiquidity(token0, token1, amountIn0, amountIn1, amount0Min, amount1Min);
         // 2.transfer to pair
-        console.log("amount: is %s %s", amount0, amount1);
         address pair = ISuperswapFactory(factory).getPair(token0, token1);
-        console.log("pair: %s", pair);
         IERC20(token0).transferFrom(msg.sender, pair, amount0);
         IERC20(token1).transferFrom(msg.sender, pair, amount1);
         // 3.mint
         liquidity = ISuperswapPair(pair).mint(to);
-        console.log("liquidity balance is %s", liquidity);
     }
 
      // need to approve.
@@ -176,23 +171,22 @@ contract SuperswapRouter {
         address[] memory path
     ) public view returns(uint[] memory amounts){
         require(path.length >= 2, "invalid path.");
-        amounts = new uint[](path.length - 1);
-        uint length = amounts.length;
-        uint _amountIn = amountIn;
-        for(uint index = 0; index < length; index++){
-            (uint reserveIn, uint reserveOut) = getResevers(path[index], path[index + 1]);
-            amounts[index] = getAmountOut(_amountIn, reserveIn, reserveOut);
-            _amountIn = amounts[index];
+        uint length = path.length;
+        amounts = new uint[](length);
+        amounts[0] = amountIn;
+        for(uint index = 1; index < length; index++){
+            (uint reserveIn, uint reserveOut) = getResevers(path[index - 1], path[index]);
+            amounts[index] = getAmountOut(amounts[index - 1], reserveIn, reserveOut);
         }
     }
 
     function _swap(address[] memory path, uint[] memory amounts, address to) private {
         uint length = amounts.length;
-        for(uint index = 0; index < length; index++){
-            address pair = ISuperswapFactory(factory).getPair(path[index], path[index + 1]);
+        for(uint index = 1; index < length; index++){
+            address pair = ISuperswapFactory(factory).getPair(path[index - 1], path[index]);
             require(pair != address(0), "pairs should be created.");
-            address _to = index == (length - 1) ? to : ISuperswapFactory(factory).getPair(path[index + 1], path[index + 2]);
-            (uint amountOut0, uint amountOut1) = path[index] < path[index + 1] ? (uint(0), amounts[index]) : (amounts[index], uint(0));
+            address _to = index == (length - 1) ? to : ISuperswapFactory(factory).getPair(path[index], path[index + 1]);
+            (uint amountOut0, uint amountOut1) = path[index - 1] < path[index] ? (uint(0), amounts[index]) : (amounts[index], uint(0));
             ISuperswapPair(pair).swap(amountOut0, amountOut1, _to);
         }
     }
@@ -234,7 +228,6 @@ contract SuperswapRouter {
         uint deadline
     ) external payable CorrectTime(deadline) returns(uint[] memory amounts){
         require(path[0] == weth, "the first token should be WETH.");
-        console.log("swapExactETHForToken msg.value: %s", msg.value);
         amounts = getAmountsOut(msg.value, path);
         uint length = amounts.length;
         require(amounts[length - 1] >= amountOutMin, "Insufficient amount.");
@@ -254,13 +247,12 @@ contract SuperswapRouter {
         address[] calldata path
     ) public view returns(uint[] memory amounts){
         require(path.length >= 2, "invalid path.");
-        amounts = new uint[](path.length - 1);
-        uint _amountOut = amountOut;
-        console.log("amountOut: is %s", amountOut);
-        for(uint index = amounts.length; index >= 1; index--){
+        uint length = path.length;
+        amounts = new uint[](length);
+        amounts[length - 1] = amountOut;
+        for(uint index = length - 1; index >= 1; index--){
             (uint reserveIn, uint reserveOut) = getResevers(path[index - 1], path[index]);
-            amounts[index - 1] = getAmountIn(_amountOut, reserveIn, reserveOut);
-            _amountOut = amounts[index - 1];
+            amounts[index - 1] = getAmountIn(amounts[index], reserveIn, reserveOut);
         }
     }
 

@@ -82,7 +82,7 @@ const getAmountsIn = async (provider, activeItemIn, activeItemOut, amountOut) =>
         ethers.utils.parseEther(amountOut).toString(),
         path
     );
-    return parseFloat(ethers.utils.formatEther(amount.toString())).toFixed(6);
+    return parseFloat(ethers.utils.formatEther(amount[0].toString())).toFixed(6);
 }
 
 const  getAmountsOut = async (provider, activeItemIn, activeItemOut, amountIn) => {
@@ -108,14 +108,14 @@ const  getAmountsOut = async (provider, activeItemIn, activeItemOut, amountIn) =
         path
     );
     
-    return parseFloat(ethers.utils.formatEther(amount.toString())).toFixed(6);
+    return parseFloat(ethers.utils.formatEther(amount[1].toString())).toFixed(6);
 }
 
 const swapTokenWithContract = async (signer, signerAddr, getAmountsMode, activeItemIn, activeItemOut, amountIn, amountOut, slippageAmount, deadlineMinutes) => {
     const router = new ethers.Contract(SuperswapRouter.address, SuperswapRouter.abi, signer);
     const weth = new ethers.Contract(WETH.address, WETH.abi, signer);
     const path = [activeItemIn.address, activeItemOut.address];
-    const deadline = ethers.BigNumber.from(Date.now() + 60000 * deadlineMinutes).toString();
+    const deadline = ethers.BigNumber.from(Date.now()).div(1000).add(60 * deadlineMinutes).toString();
     const slippage = parseFloat(slippageAmount).toFixed(2);
     if(activeItemIn.name === "ETH" && activeItemOut.name === "WETH"){
         const amount = (getAmountsMode === "AmountIn") ? amountIn : amountOut;
@@ -165,17 +165,17 @@ const swapTokenWithContract = async (signer, signerAddr, getAmountsMode, activeI
         const amountInMax = ethers.utils.parseEther(amountIn).mul(10000 + 100 * slippage).div(10000).toString();
         if(activeItemIn.name === "ETH"){
             path[0] = WETH.address;
-            await router.swapExactETHForToken(
+            await router.swapETHForExactToken(
                 ethers.utils.parseEther(amountOut).toString(),
                 path,
                 signerAddr,
                 deadline,
-                {gasLimit: 3e7, value: ethers.utils.parseEther(amountInMax)}
+                {gasLimit: 3e7, value: amountInMax}
             );
         }else if(activeItemOut.name === "ETH"){
             path[1] = WETH.address;
             const erc20 = await getERC20Contract(activeItemIn.address, signer);
-            await erc20.approve(SuperswapRouter.address, ethers.utils.parseEther(amountInMax).toString());
+            await erc20.approve(SuperswapRouter.address, amountInMax);
             await router.swapTokenForExactETH(
                 ethers.utils.parseEther(amountOut).toString(),
                 amountInMax,
@@ -186,7 +186,7 @@ const swapTokenWithContract = async (signer, signerAddr, getAmountsMode, activeI
             );
         }else{
             const erc20 = await getERC20Contract(activeItemIn.address, signer);
-            await erc20.approve(SuperswapRouter.address, ethers.utils.parseEther(amountInMax).toString());
+            await erc20.approve(SuperswapRouter.address, amountInMax);
             await router.swapTokenForExactToken(
                 ethers.utils.parseEther(amountOut).toString(),
                 amountInMax,
@@ -230,7 +230,7 @@ const getItemPrice = async (provider, activeItemIn, activeItemOut, shouldExised)
 
 const addLiquidityWithContract = async (signer, signerAddr, activeItemIn0, activeItemIn1, amountIn0, amountIn1, slippageAmount, deadlineMinutes) => {
     const router = new ethers.Contract(SuperswapRouter.address, SuperswapRouter.abi, signer);
-    const deadline = ethers.BigNumber.from(Date.now() + 60000 * deadlineMinutes).toString();
+    const deadline = ethers.BigNumber.from(Date.now()).div(1000).add(60 * deadlineMinutes).toString();
     const slippage = parseFloat(slippageAmount).toFixed(2);
     const amount0Min = ethers.utils.parseEther(amountIn0).mul(10000 - 100 * slippage).div(10000).toString();
     const amount1Min = ethers.utils.parseEther(amountIn1).mul(10000 - 100 * slippage).div(10000).toString();
@@ -281,7 +281,7 @@ const addLiquidityWithContract = async (signer, signerAddr, activeItemIn0, activ
 
 const RemoveLiquidityWithContract = async (signer, signerAddr, activeItemIn0, activeItemIn1, liquidityAmount, slippageAmount, deadlineMinutes) => {
     const router = new ethers.Contract(SuperswapRouter.address, SuperswapRouter.abi, signer);
-    const deadline = ethers.BigNumber.from(Date.now() + 60000 * deadlineMinutes).toString();
+    const deadline = ethers.BigNumber.from(Date.now()).div(1000).add(60 * deadlineMinutes).toString();
     const slippage = parseFloat(slippageAmount).toFixed(2);
     const slippageAfterAmount = ethers.utils.parseEther(liquidityAmount).mul(10000 - 100 * slippage).div(10000);
 

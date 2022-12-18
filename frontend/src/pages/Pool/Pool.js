@@ -66,15 +66,6 @@ export default function Pool({tokens, isConnected, signerAddr, signer, getSigner
     }
   }
 
-  useEffect(() => {
-    const init = async () => {
-      await updateTokenBalance();
-      await updateLiquidityBalance();
-    }
-    init();
-  }, [isConnected, activeItemIn0.name, activeItemIn1.name]);
-
-
   const updateAmount = (value, mode) => {
     if(mode === "AmountIn"){
       setGetAmountsMode("AmountIn");
@@ -98,9 +89,11 @@ export default function Pool({tokens, isConnected, signerAddr, signer, getSigner
           setAmountIn0(amount);
         }
       }
+      await updateTokenBalance();
+      await updateLiquidityBalance();
     }
     updateAmountValue(); 
-  }, [activeItemIn0.name, activeItemIn1.name, amountIn0, amountIn1]);
+  }, [isConnected, activeItemIn0.name, activeItemIn1.name, amountIn0, amountIn1, liquidityAmount]);
 
   const formatNum = (num) => {
     const str = num.toString();
@@ -188,7 +181,7 @@ export default function Pool({tokens, isConnected, signerAddr, signer, getSigner
             (activeItemIn0.name === undefined || activeItemIn1.name === undefined) ? (
                 <button className="btn btn-secondary" type="button" disabled>Select a token</button>
             ) : (
-              (parseFloat(activeItemIn0.balance) < parseFloat(amountIn0) && parseFloat(activeItemIn1.balance) < parseFloat(amountIn1)) ? (
+              (parseFloat(activeItemIn0.balance) < parseFloat(amountIn0) || parseFloat(activeItemIn1.balance) < parseFloat(amountIn1)) ? (
                 <button className="btn btn-secondary" type="button" disabled>Insufficient Amount</button>
               ) :(
                 ((activeItemIn0.name === "ETH" && activeItemIn1.name === "WETH") || (activeItemIn0.name === "WETH" && activeItemIn1.name === "ETH")) ? (
