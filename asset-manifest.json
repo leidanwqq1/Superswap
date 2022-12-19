@@ -1,0 +1,20 @@
+{
+  "files": {
+    "main.css": "/Superswap/static/css/main.70d3421f.css",
+    "main.js": "/Superswap/static/js/main.8e00b151.js",
+    "static/media/WBTC.png": "/Superswap/static/media/WBTC.80c6afd146f4c131853a.png",
+    "static/media/UNI.png": "/Superswap/static/media/UNI.2479e47e3d7f43ab5f10.png",
+    "static/media/USDT.png": "/Superswap/static/media/USDT.006177e6b2ff9c8fcfb9.png",
+    "static/media/LINK.png": "/Superswap/static/media/LINK.66dbd6d9ac0ce142eb95.png",
+    "static/media/INCH.png": "/Superswap/static/media/INCH.d41272c935af18184838.png",
+    "static/media/SHIB.png": "/Superswap/static/media/SHIB.e67a1d94f93e53c968b6.png",
+    "static/media/DAI.png": "/Superswap/static/media/DAI.849478a756d546e306e8.png",
+    "index.html": "/Superswap/index.html",
+    "main.70d3421f.css.map": "/Superswap/static/css/main.70d3421f.css.map",
+    "main.8e00b151.js.map": "/Superswap/static/js/main.8e00b151.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.70d3421f.css",
+    "static/js/main.8e00b151.js"
+  ]
+}
