@@ -1,0 +1,94 @@
+.SwapBox {
+    margin-top: 80px;
+}
+
+.SwapBox-header {
+    padding: 8px 12px;
+    margin-bottom: 8px;
+    width: 100%;
+    color: rgb(119, 128, 160);
+}
+
+.SwapBox-field {
+    margin-bottom: 4px;
+    position: relative;
+    background-color: rgb(245, 246, 252);
+    border-radius: 12px;
+    padding: 16px;
+    color: rgb(119, 128, 160);
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: 500;
+}
+
+.SwapBox-dialogButton {
+    background-color: rgb(232, 236, 251);
+    color: rgb(13, 17, 28);
+    border-radius: 16px;
+    border: none;
+    font-size: 20px;
+    font-weight: 400;
+    padding: 8px;
+}
+
+.SwapBox-balance {
+    box-sizing: border-box;
+    margin-top: 4px;
+    min-width: 0px;
+    font-weight: 400;
+    font-size: 14px;
+    color: rgb(119, 128, 160);
+    padding: 4px 0px 0px;
+    
+}
+
+.SwapBox-chevronDownModal {
+    margin: 0 auto;
+    margin-top: 80px;
+    max-width: 420px;
+    max-height: 80vh;
+    min-height: 80vh;
+}
+
+.SwapBox-SelectToken  {
+    font-size: 16px;
+    font-weight: bold; 
+    margin-right:4px;
+    /* background-color: rgb(251, 17, 142);
+    opacity: 0.4;
+    color: rgb(255, 255, 255); */
+    border-radius: 16px;
+    padding: 6px 6px 6px 8px;
+}
+
+.SwapBox-Price  {
+    padding: 4px 20px;
+    margin-top: 0px;
+    margin-bottom: 8px;
+    background-color: rgb(245, 246, 252);
+    border-radius: 12px;
+    color: rgb(119, 128, 160);
+    font-size: 14px;
+    font-weight: bord;
+}
+
+.SwapBox-ArrowFiled {
+    border-radius: 12px;
+    height: 40px;
+    width: 40px;
+    position: relative;
+    margin: -18px auto;
+    background-color: rgb(232, 236, 251);
+    border: 4px solid rgb(255, 255, 255);
+    z-index: 2;
+}
+
+.SwapBox-Arrow {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    border: none;
+    border-radius: 12px;
+}
