@@ -26,8 +26,8 @@ function App() {
   }, []);
 
   const getSigner = async provider =>{
-    provider.send("eth_requestAccounts", []);
-    const signer = provider.getSigner();
+    await provider.send("eth_requestAccounts", []);
+    const signer = await provider.getSigner();
     setSigner(signer);
     signer.getAddress()
       .then(address => {
