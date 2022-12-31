@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - master
+  pull_request:
 
 jobs:
   test:
@@ -20,7 +21,10 @@ jobs:
       - uses: actions/checkout@v2
       - name: Build project
         run: |
-          npm install && cd frontend && npm install && npm run build
-          cd ../ && npm run deploy
-     
+          npm install && cd frontend && npm install && npm run build && cd ../
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./frontend/build
           
