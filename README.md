@@ -8,10 +8,10 @@
   <img src="https://img.shields.io/badge/coverage-100%25-brightgreen" target="_blank" />
   <img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat" target="_blank" />
 </p>
-
-<img src="./readme_assets/superswap.gif" width="100%" />
-
-<h2 align="center"><a  href="https://getsuperswap.com/">✨Superswap Link</a></h2>
+<p align="center" >
+  <img src="./readme_assets/superswap.gif" width="80%" />
+</p>
+<h2 align="center"><a  href="https://getsuperswap.com/" target="_blank">✨Superswap Link</a></h2>
 
 
 ## Description
@@ -55,15 +55,14 @@ npm start
 ## Author
 
 👤 **Dan Lei**
-
 * Website: https://danlei.org/
 * Github: [@leidanwqq1](https://github.com/leidanwqq1)
-* LinkedIn: [@DanLei](https://linkedin.com/in/https:\/\/www.linkedin.com\/in\/danleiweb3\/)
+* LinkedIn: [@DanLei](https://linkedin.com/in/danleiweb3/)
 
 ## Code Contributors
 
 This project exists thanks to all the people who contribute.<br />
-<a href="https://github.com/leidanwqq1/Superswap/graphs/contributors">
+<a href="https://github.com/leidanwqq1/Superswap/graphs/contributors" target="_blank">
   <img src="https://contrib.rocks/image?repo=leidanwqq1/Superswap" />
 </a>
 
